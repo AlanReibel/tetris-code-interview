@@ -266,18 +266,7 @@ document.addEventListener('keydown', event => {
   }
 
   if (event.key === 'ArrowUp') {
-    const rotated = []
-
-    // ESTO ES LO MÁS COMPLICADO DE LEJOS
-    for (let i = 0; i < piece.shape[0].length; i++) {
-      const row = []
-
-      for (let j = piece.shape.length - 1; j >= 0; j--) {
-        row.push(piece.shape[j][i])
-      }
-
-      rotated.push(row)
-    }
+    const rotated = rotatePiece(piece.shape)
 
     const previousShape = piece.shape
     piece.shape = rotated
@@ -286,6 +275,12 @@ document.addEventListener('keydown', event => {
     }
   }
 })
+
+function rotatePiece (piece) {
+  return piece[0].map((_, columnIndex) =>
+    piece.map(row => row[columnIndex]).reverse()
+  )
+}
 
 function checkCollision () {
   return piece.shape.find((row, y) => {
